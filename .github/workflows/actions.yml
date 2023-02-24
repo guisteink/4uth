@@ -9,14 +9,23 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+
       - name: installing node_modules
         run: npm install
       # - name: building project
       #   run: npm run build
       # - name: running prettier
       #   run: npm run prettier
+
       - name: running eslint
         run: npm run lint
+
       - name: running health-check test
-        run: npm run test:fn
+        if: ${{SUCCESS}} != true
+        uses: npm run test:fn
+        # uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('failed on health check')
+
       - run: echo "This job's status is ${{ job.status }}."
