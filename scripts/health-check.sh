@@ -1,5 +1,10 @@
 #!/bin/bash
 
+error_exit() {
+  echo "Error exit code 1"
+  exit 1
+}
+
 # NEED DEPLOY(uri) FOR TEST BY THIS WAY
 REQUEST=$(
   curl -L \
@@ -7,6 +12,6 @@ REQUEST=$(
     http://localhost:3333/health-check \
 )
 
-SUCCESS=$(echo "${REQUEST}" | jq -r '.success' )
+SUCCESS=$(echo "${REQUEST}" | jq -r '.success')
 
-[[ $SUCCESS = "true" ]] && echo true || echo false
+[[ $SUCCESS = "truee" ]] && echo true || echo $(error_exit)

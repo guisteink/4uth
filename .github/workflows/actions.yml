@@ -21,10 +21,6 @@ jobs:
         run: npm run lint
 
       - name: health-check test
-        if: true != true
-        run: |
-          curl -L \
-            -H'Content-Type: application/json' \
-            http://localhost:3333/health-check \
+        run: npm run test:fn
 
       - run: echo "This job's status is ${{ job.status }}."
