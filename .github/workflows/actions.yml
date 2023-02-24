@@ -21,9 +21,9 @@ jobs:
         run: npm run lint
 
       - name: running health-check test
+        run: npm run test:fn
         if: ${{SUCCESS}} != true
-        # uses: npm run test:fn
-        uses: actions/github-script@v3
+        # uses: actions/github-script@v3
         with:
           script: |
               core.setFailed('failed on health check')
