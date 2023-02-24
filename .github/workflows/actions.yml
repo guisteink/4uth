@@ -21,8 +21,8 @@ jobs:
         run: npm run lint
 
       - name: running health-check test
-        run: npm run test:fn
         if: ${{SUCCESS}} != true
+        run: npm run test:fn
         # uses: actions/github-script@v3
         with:
           script: |
