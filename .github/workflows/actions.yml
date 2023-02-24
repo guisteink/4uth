@@ -17,6 +17,6 @@ jobs:
       #   run: npm run prettier
       - name: running eslint
         run: npm run lint
-      # - name: running tests
-      #   run: npm run test
+      - name: running health-check test
+        run: npm run test:fn
       - run: echo "This job's status is ${{ job.status }}."
