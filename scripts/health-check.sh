@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# NEED DEPLOY(uri) FOR TEST BY THIS WAY
 REQUEST=$(
   curl -L \
     -H'Content-Type: application/json' \
