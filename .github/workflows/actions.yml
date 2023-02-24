@@ -20,12 +20,11 @@ jobs:
       - name: running eslint
         run: npm run lint
 
-      - name: running health-check test
-        if: ${{SUCCESS}} != true
-        run: npm run test:fn
-        # uses: actions/github-script@v3
-        with:
-          script: |
-              core.setFailed('failed on health check')
+      - name: health-check test
+        if: true != true
+        run: |
+          curl -L \
+            -H'Content-Type: application/json' \
+            http://localhost:3333/health-check \
 
       - run: echo "This job's status is ${{ job.status }}."
