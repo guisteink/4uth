@@ -8,7 +8,7 @@ app.listen(3333, () => {
 })
 
 router.get("/health-check", (req: express.Request, res: express.Response) => {
-  res.status(200).json({ message: "Hello World" });
+  res.status(200).json({ message: "Hello World", success: true });
 });
 
 app.use(router);

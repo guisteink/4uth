@@ -8,6 +8,7 @@
     "typescript": "*"
   },
   "scripts": {
+    "test:fn": "./scripts/health-check.sh",
     "start": "ts-node-dev app.ts",
     "lint:fix": "eslint src --fix --cache --ext .ts",
     "lint": "eslint src --cache --ext .ts"
