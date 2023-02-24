@@ -7,7 +7,7 @@
     "typescript": "*"
   },
   "scripts": {
-    "start": "ts-node-dev ./index.js",
+    "start": "ts-node-dev src/index.ts",
     "lint:fix": "eslint src --fix --cache --ext .ts",
     "lint": "eslint src --cache --ext .ts"
   },
@@ -22,6 +22,7 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "ts-node-dev": "^2.0.0"
   }
 }
