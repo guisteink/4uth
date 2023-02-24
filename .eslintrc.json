@@ -1,0 +1,71 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "extends": ["eslint:recommended", "prettier"],
+    "overrides": [
+    ],
+    "plugins": ["@typescript-eslint", "jest", "prettier"],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+
+    "keyword-spacing": "error",
+    //"func-names": "off",
+    //"@typescript-eslint/no-explicit-any": "off",
+    // TODO: review
+    "@typescript-eslint/no-var-requires": "off",
+    "no-empty": "off",
+    "prefer-const": "off",
+    "no-restricted-globals": "off",
+    "no-nested-ternary": "off",
+    "max-classes-per-file": "off",
+    "radix": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "prefer-destructuring": "off",
+    "no-underscore-dangle": "off",
+    "no-plusplus": "off",
+    "explicit-function-return-type": "off",
+    "no-use-before-define": "off",
+    "no-useless-escape": "off",
+    "import/no-mutable-exports": "off",
+    "consistent-return": "off",
+    "no-case-declarations": "off",
+    // end TODO
+    "no-await-in-loop": "off",
+    "no-restricted-syntax": "off",
+    "no-continue": "off",
+    "semi": "error",
+    "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
+    "quotes": "error",
+    "no-trailing-spaces": "error",
+    "camelcase": "off",
+    // "import/extensions": ["error", "ignorePackages", {
+    //   "js": "never",
+    //   "jsx": "never",
+    //   "ts": "never",
+    //   "tsx": "never"
+    // }],
+    // "@typescript-eslint/explicit-function-return-type": [
+    //   "error",
+    //   { "allowExpressions": true }
+    // ],
+    "import/prefer-default-export": "off",
+    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+    // "no-use-before-define": ["error", { "functions": false, "classes": false }],
+    "no-param-reassign": ["warn", { "props": false }],
+    "no-shadow": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "vars": "all", "args": "none" }],
+    "@typescript-eslint/no-shadow": ["error"],
+    "class-methods-use-this": "off",
+    // "@typescript-eslint/no-useless-constructor": "error",
+    "no-useless-constructor": "off"
+    }
+}
