@@ -1,9 +1,9 @@
-const bcrypt = require('bcryptjs');
-const { Schema } = require('mongoose');
+const bcrypt = require("bcryptjs");
+const { Schema } = require("mongoose");
 
-const mongo = require('../../config/database');
-const userStatus = require('./user.status/user.status');
-const userRoles = require('./user.roles/user.roles');
+const mongo = require("../../config/database");
+const userStatus = require("./user.status/user.status");
+const userRoles = require("./user.roles/user.role");
 // const IUser = require('./interfaces/user');
 const schema = mongo.Schema;
 
@@ -29,6 +29,6 @@ UserSchema.pre("save", async function (this: typeof Schema,next: () => void) {
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
   next();
-})
+});
 
 module.exports = mongo.model("User", UserSchema);

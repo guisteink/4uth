@@ -1,6 +1,6 @@
-export type UserStatus = 'ACTIVE' | 'INACTIVE';
+export type UserStatus = "ACTIVE" | "INACTIVE"
 
-export type UserRole = 'ADMINISTRATOR' | 'MANAGER' | 'USER' | 'GUEST';
+export type UserRole = "ADMINISTRATOR" | "MANAGER" | "USER" | "GUEST";
 
 export interface IUser {
   name: string;
