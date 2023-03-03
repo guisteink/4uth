@@ -2,9 +2,9 @@ const bcrypt = require("bcryptjs");
 const { Schema } = require("mongoose");
 
 const mongo = require("../../config/database");
-const userStatus = require("./user.status/user.status");
-const userRoles = require("./user.roles/user.role");
-// const IUser = require('./interfaces/user');
+const userStatus = require("./enums/user.status");
+const userRoles = require("./enums/user.roles");
+
 const schema = mongo.Schema;
 
 const UserSchema: typeof Schema = new schema({

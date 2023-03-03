@@ -1,9 +1,11 @@
-import express from "express";
+const express = require("express");
 
-import { app } from "../app";
+const app = require("../app");
+const connect = require("../config/database");
 
-function initConfigs(): void {
+async function initConfigs(): Promise<void> {
+  await connect();
   app.use(express.json());
-}
+};
 
 initConfigs();

@@ -1,13 +1,12 @@
-import express from "express";
+const express = require("express");
 
-export let app: express.Application = express();
-const router: express.Router = express.Router();
+export let app = express();
+const router = express.Router();
 
 app.listen(3333, () => {
   console.log("listening on port 3333 🔥");
-})
 
-router.get("/health-check", (req: express.Request, res: express.Response) => {
+router.get("/health-check", (req: any, res: any) => {
   res.status(200).json({ message: "Hello World", success: true });
 });
 
