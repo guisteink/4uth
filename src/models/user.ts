@@ -5,7 +5,7 @@ const mongo = require("../../config/database");
 const userStatus = require("./enums/user.status");
 const userRoles = require("./enums/user.roles");
 
-const schema = mongo.Schema;
+const schema: typeof Schema = mongo.Schema;
 
 const UserSchema: typeof Schema = new schema({
   name: {
@@ -18,8 +18,16 @@ const UserSchema: typeof Schema = new schema({
     required: true,
     selected: false,
   },
-  role: { default: userRoles[0] },
-  status: { default: userStatus[0] },
+  role: {
+    type: String,
+    enum: userRoles,
+    default: userRoles[0],
+  },
+  status: {
+    type: String,
+    enum: userStatus,
+    default: userStatus[0],
+  },
   email: { type: String },
   zipcode: { type: Number },
   phone: { type: Number },
