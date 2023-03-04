@@ -8,8 +8,8 @@ export interface IUser {
   email?: string;
   zipcode?: string;
   phone?: number;
-  role: UserRole;
-  status: UserStatus;
+  role?: UserRole;
+  status?: UserStatus;
   dob?: {
     type: object,
     date: Date,

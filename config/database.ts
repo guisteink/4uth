@@ -14,3 +14,5 @@ export async function connect(){
     console.error(error);
   }
 }
+
+export default mongoose;

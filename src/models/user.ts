@@ -1,14 +1,14 @@
 const bcrypt = require("bcryptjs");
-const { Schema } = require("mongoose");
+const mongoose = require("mongoose");
 
 const mongo = require("../../config/database");
 const userStatus = require("./enums/user.status");
 const userRoles = require("./enums/user.roles");
 
-const schema: typeof Schema = mongo.Schema;
+const schema: typeof mongoose.Schema = mongo.Schema;
 
-const UserSchema: typeof Schema = new schema({
-  name: {
+const UserSchema = new mongoose.Schema({
+  username: {
     type: String,
     required: true,
     lowercase: true,
@@ -20,23 +20,34 @@ const UserSchema: typeof Schema = new schema({
   },
   role: {
     type: String,
-    enum: userRoles,
-    default: userRoles[0],
+    enum: ["administrator", "manager", "user", "guest"],
+    // default: userRoles[0],
   },
   status: {
     type: String,
-    enum: userStatus,
-    default: userStatus[0],
+    enum: ["active", "inactive"],
+    // default: userStatus[0],
   },
   email: { type: String },
   zipcode: { type: Number },
   phone: { type: Number },
+  dob: {
+    type: Object,
+    data: { type: Date },
+    age: { type: Number },
+  }
 }, { timestamp: true });
 
-UserSchema.pre("save", async function (this: typeof Schema,next: () => void) {
+UserSchema.pre("save", async function (this: typeof mongoose.Schema,next: () => void) {
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;
+
+  const birth = Math.round((new Date().getTime() - new Date(this.dob.date).getTime()) / (31536000000))
+  this.dob.age = birth;
+  const now = new Date(Date.now())
+  this.registered.data = now;
+
   next();
 });
 
-module.exports = mongo.model("User", UserSchema);
+module.exports = mongoose.model("User", UserSchema);
