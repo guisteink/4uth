@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const { secret } = require("../../config/auth.json");
 const { Request, Response, NextFunction } = require("express");
 const IJWTPayload = require("../models/interfaces/jwt-payload");
-const { NotFoundError } = require("../models/errors/notfound.error");
 const { UnauthorizedError } = require("../models/errors/unauthorized.error");
 const { BadRequestError } = require("../models/errors/badrequest.error");
 
