@@ -1,0 +1,14 @@
+{
+  "name": "4uth",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:guisteink/4uth.git",
+  "author": "Guilherme <guilherme.stein@zenvia.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}
