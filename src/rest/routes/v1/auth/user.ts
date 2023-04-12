@@ -1,5 +1,0 @@
-
-// get
-// list
-// delete
-// update
