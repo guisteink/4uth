@@ -19,7 +19,7 @@ const signIn = async (req, res, next) => {
     }
 
     if (user) {
-      const modifiedUser = { ...user };
+      const modifiedUser = user;
       modifiedUser.token = modifiedUser.generateJWT();
       return res.json(modifiedUser.toAuthJSON());
     }
