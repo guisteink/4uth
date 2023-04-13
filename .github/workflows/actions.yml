@@ -17,8 +17,8 @@ jobs:
       # - name: running prettier
       #   run: npm run prettier
 
-      # - name: running eslint
-      #   run: npm run lint
+      - name: running eslint
+        run: npm run lint
 
       # - name: health-check test
       #   run: npm run test:fn
