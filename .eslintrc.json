@@ -25,6 +25,7 @@
   "no-unused-vars": "warn",
   "react/jsx-uses-react": "warn",
   "react/jsx-uses-vars": "warn",
-  "prettier/prettier": "error"
+  "prettier/prettier": "error",
+  "no-underscore-dangle": "off"
 }
 }

@@ -1,51 +1,57 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const uniqueValidator = require('mongoose-unique-validator');
-const crypto = require('crypto');
-// const { secret } = require("../configs");
+const uniqueValidator = require("mongoose-unique-validator");
+const crypto = require("crypto");
+
+const { secret } = require("../configs/secret.json");
 
 const validEmailRegex = /\S+@\S+\.\S+/;
 const validUsernameRegex = /^[a-zA-Z0-9]+$/;
 
-const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    lowercase: true,
-    unique: true,
-    required: [true, "can't be empty"],
-    match: [validUsernameRegex, "is invalid"],
-    index: true,
+const UserSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: [true, "can't be empty"],
+      match: [validUsernameRegex, "is invalid"],
+      index: true,
+    },
+    email: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: [true, "can't be empty"],
+      match: [validEmailRegex, "is invalid"],
+      index: true,
+    },
+    role: {
+      type: String,
+      enum: ["Admin", "Manager", "User"],
+      default: "User",
+    },
+    avatar: String,
+    hash: String,
+    salt: String,
   },
-  email: {
-    type: String,
-    lowercase: true,
-    unique: true,
-    required: [true, "can't be empty"],
-    match: [validEmailRegex, "is invalid"],
-    index: true,
-  },
-  role: {
-    type: String,
-    enum: ["Admin", "Manager", "User"],
-    default: "User",
-  },
-  avatar: String,
-  hash: String,
-  salt: String,
-}, {timestamps: true});
+  { timestamps: true }
+);
 
 /**
  * Adds a plugin that checks if the unique fields of the model
  * are really unique and generates a custom error message if they are not.
  */
-UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
+UserSchema.plugin(uniqueValidator, { message: "is already taken." });
 
 /**
  * Verifies if the password provided by the user matches the password
  * stored in the database, by comparing the encrypted hashes of the two passwords.
  */
 UserSchema.methods.validPassword = (password) => {
-  const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+  const hash = crypto
+    .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
+    .toString("hex");
   return this.hash === hash;
 };
 
@@ -54,8 +60,10 @@ UserSchema.methods.validPassword = (password) => {
  * key (salt) and storing the resulting hash in the database.
  */
 UserSchema.methods.setPassword = (password) => {
-  this.salt = crypto.randomBytes(16).toString('hex');
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+  this.salt = crypto.randomBytes(16).toString("hex");
+  this.hash = crypto
+    .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
+    .toString("hex");
 };
 
 /**
@@ -68,11 +76,14 @@ UserSchema.methods.generateJWT = () => {
   const exp = new Date(today);
   exp.setDate(today.getDate() + 2);
 
-  return jwt.sign({
-    id: this._id,
-    username: this.username,
-    exp: parseInt(exp.getTime() / 1000),
-  }, secret);
+  return jwt.sign(
+    {
+      id: this._id,
+      username: this.username,
+      exp: parseInt(exp.getTime() / 1000, 10),
+    },
+    secret
+  );
 };
 
 /**
@@ -82,15 +93,13 @@ UserSchema.methods.generateJWT = () => {
  * This object is typically used to send authentication data back
  * to the client-side application.
  */
-UserSchema.methods.toAuthJSON = () => {
-  return {
-    username: this.username,
-    email: this.email,
-    token: this.generateJWT(),
-    bio: this.bio,
-    image: this.image
-  };
-};
+UserSchema.methods.toAuthJSON = () => ({
+  username: this.username,
+  email: this.email,
+  token: this.generateJWT(),
+  bio: this.bio,
+  image: this.image,
+});
 
 const User = mongoose.model("User", UserSchema);
 
