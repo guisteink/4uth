@@ -12,15 +12,8 @@ jobs:
 
       - name: installing node_modules
         run: npm install
-      # - name: building project
-      #   run: npm run build
-      # - name: running prettier
-      #   run: npm run prettier
 
       - name: running eslint
         run: npm run lint
-
-      # - name: health-check test
-      #   run: npm run test:fn
 
       - run: echo "This job's status is ${{ job.status }}."
