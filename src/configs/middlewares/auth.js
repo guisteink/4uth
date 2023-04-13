@@ -14,6 +14,7 @@ function getTokenFromHeader(req) {
   return null;
 }
 
+// todo: analyze
 const auth = {
   required: jwt({
     secret,
