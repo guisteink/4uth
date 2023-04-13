@@ -61,9 +61,13 @@ UserSchema.methods.validPassword = (password) => {
  */
 UserSchema.methods.setPassword = (password) => {
   this.salt = crypto.randomBytes(16).toString("hex");
-  this.hash = crypto
-    .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
-    .toString("hex");
+  // this.hash = crypto
+  //   .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
+  //   .toString("hex");
+
+  const hash = crypto.createHash("sha3-512");
+  hash.update(password + this.salt);
+  this.hash = hash.digest("hex");
 };
 
 /**
