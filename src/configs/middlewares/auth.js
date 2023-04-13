@@ -19,13 +19,13 @@ const auth = {
   required: jwt({
     secret,
     userProperty: "payload",
-    algorithms: ["sha3-512"],
+    algorithms: ["sha512"],
     getToken: getTokenFromHeader,
   }),
   optional: jwt({
     secret,
     userProperty: "payload",
-    algorithms: ["sha3-512"],
+    algorithms: ["sha512"],
     credentialsRequired: false,
     getToken: getTokenFromHeader,
   }),

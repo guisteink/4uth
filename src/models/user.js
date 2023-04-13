@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+
+const { Schema } = mongoose;
 const jwt = require("jsonwebtoken");
 const uniqueValidator = require("mongoose-unique-validator");
 const crypto = require("crypto");
@@ -8,7 +10,7 @@ const { secret } = require("../configs");
 const validEmailRegex = /\S+@\S+\.\S+/;
 const validUsernameRegex = /^[a-zA-Z0-9]+$/;
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new Schema(
   {
     username: {
       type: String,
@@ -28,12 +30,13 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["Admin", "Manager", "User"],
-      default: "User",
+      lowercase: true,
+      enum: ["admin", "manager", "user"],
+      default: "user",
     },
     avatar: String,
-    hash: String,
-    salt: String,
+    hash: { type: String, selected: false },
+    salt: { type: String, selected: false },
   },
   { timestamps: true }
 );
@@ -48,7 +51,7 @@ UserSchema.plugin(uniqueValidator, { message: "is already taken." });
  * Verifies if the password provided by the user matches the password
  * stored in the database, by comparing the encrypted hashes of the two passwords.
  */
-UserSchema.methods.validPassword = (password) => {
+UserSchema.methods.validPassword = function (password) {
   const hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
     .toString("hex");
@@ -59,15 +62,11 @@ UserSchema.methods.validPassword = (password) => {
  * Sets the user's password by encrypting it with a random encryption
  * key (salt) and storing the resulting hash in the database.
  */
-UserSchema.methods.setPassword = (password) => {
+UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString("hex");
-  // this.hash = crypto
-  //   .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
-  //   .toString("hex");
-
-  const hash = crypto.createHash("sha3-512");
-  hash.update(password + this.salt);
-  this.hash = hash.digest("hex");
+  this.hash = crypto
+    .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
+    .toString("hex");
 };
 
 /**
@@ -75,7 +74,7 @@ UserSchema.methods.setPassword = (password) => {
  * authentication purposes. The token contains the user's id, username,
  * and an expiration date (2 days from today). The token is signed with
  * a secret key that is only known by the server. */
-UserSchema.methods.generateJWT = () => {
+UserSchema.methods.generateJWT = function () {
   const today = new Date();
   const exp = new Date(today);
   exp.setDate(today.getDate() + 2);
@@ -97,13 +96,15 @@ UserSchema.methods.generateJWT = () => {
  * This object is typically used to send authentication data back
  * to the client-side application.
  */
-UserSchema.methods.toAuthJSON = () => ({
-  username: this.username,
-  email: this.email,
-  token: this.generateJWT(),
-  bio: this.bio,
-  image: this.image,
-});
+UserSchema.methods.toAuthJSON = function () {
+  return {
+    username: this.username,
+    email: this.email,
+    token: this.generateJWT(),
+    bio: this.bio,
+    image: this.image,
+  };
+};
 
 const User = mongoose.model("User", UserSchema);
 

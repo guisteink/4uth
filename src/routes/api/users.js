@@ -14,7 +14,7 @@ router.get("/user", auth.required, (req, res, next) => getUser(req, res, next));
 router.put("/user", auth.required, (req, res, next) =>
   updateUser(req, res, next)
 );
-router.post("/users", auth.required, (req, res, next) =>
+router.post("/user", auth.required, (req, res, next) =>
   createUser(req, res, next)
 );
 

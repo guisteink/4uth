@@ -7,7 +7,7 @@ const getUser = async (req, res, next) => {
         return res.sendStatus(401);
       }
 
-      return res.json({ user: user.toAuthJSON() });
+      return res.json(user.toAuthJSON());
     })
     .catch(next);
 };
@@ -36,28 +36,27 @@ const updateUser = async (req, res, next) => {
         updatedUser.setPassword(password);
       }
 
-      return updatedUser
-        .save()
-        .then(() => res.json({ user: updatedUser.toAuthJSON() }));
+      return updatedUser.save().then(() => res.json(updatedUser.toAuthJSON()));
     })
     .catch(next);
 };
 
 const createUser = async (req, res, next) => {
-  // todo: user exists?
-  const user = new User();
+  const { username, email, avatar, role, password } = req.body;
 
-  const { username, email, avatar, role, password } = req.body.user;
+  const findUser = await User.findOne({ username });
 
-  user.username = username;
-  user.email = email;
-  user.avatar = avatar;
-  user.role = role;
+  if (findUser) {
+    return res.status(400).json({ error: "User already exists" });
+  }
+
+  const user = new User({ username, email, avatar, role, password });
+
   user.setPassword(password);
 
-  user
+  return user
     .save()
-    .then(() => res.json({ user: user.toAuthJSON() }))
+    .then(() => res.json(user.toAuthJSON()))
     .catch(next);
 };
 

@@ -11,6 +11,8 @@ const { connectToMongodb } = require("./src/configs/database");
 const app = express();
 const PORT = process.env.PORT || 3334;
 
+require("./src/configs/passport");
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

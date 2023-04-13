@@ -1,12 +1,15 @@
-const passport = require("../configs/passport");
+const passport = require("passport");
+
 const User = require("../models/user");
 
 const signIn = async (req, res, next) => {
-  if (!req.body.user.email) {
+  const { email, username, password } = req.body ?? {};
+
+  if (!(email || username)) {
     return res.status(422).json({ errors: { email: "can't be empty" } });
   }
 
-  if (!req.body.user.password) {
+  if (!password) {
     return res.status(422).json({ errors: { password: "can't be empty" } });
   }
 
@@ -18,7 +21,7 @@ const signIn = async (req, res, next) => {
     if (user) {
       const modifiedUser = { ...user };
       modifiedUser.token = modifiedUser.generateJWT();
-      return res.json({ user: modifiedUser.toAuthJSON() });
+      return res.json(modifiedUser.toAuthJSON());
     }
 
     return res.status(422).json(info);
@@ -28,29 +31,22 @@ const signIn = async (req, res, next) => {
 };
 
 const signUp = async (req, res, next) => {
-  const { username, email, avatar, password } = req.body.user;
+  const { username, email, avatar, password } = req.body;
 
-  const findUser = await User.findOne({
-    username: {
-      $eq: username,
-    },
-  });
+  const findUser = await User.findOne({ username });
 
-  if (!findUser) {
-    const user = new User();
-
-    user.username = username;
-    user.email = email;
-    user.avatar = avatar;
-    user.setPassword(password);
-
-    user
-      .save()
-      .then(() => res.json({ user: user.toAuthJSON() }))
-      .catch(next);
+  if (findUser) {
+    return res.status(422).json({ error: "User already exists" });
   }
 
-  return res.status(400).json({ error: "User already exists" });
+  const user = new User({ username, email, avatar, password });
+
+  user.setPassword(password);
+
+  return user
+    .save()
+    .then(() => res.json(user.toAuthJSON()))
+    .catch(next);
 };
 
 module.exports = { signIn, signUp };
