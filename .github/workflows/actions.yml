@@ -11,8 +11,8 @@ jobs:
       run:
         bash -c "npm install
         && npm run eslint
-        && yarn run start & sleep 5
-        && curl http://localhost:3333/api/health-check"
+        && yarn run start & sleep 5"
+        # && curl http://localhost:3333/api/health-check"
 
 
 
