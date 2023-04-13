@@ -9,7 +9,7 @@ jobs:
     steps:
     - name: start app and test
       run:
-        bash -c "npm install
+        bash -c "npm && npm install
         && npm run eslint
         && npm run start & sleep 15"
         # && curl http://localhost:3333/api/health-check"
