@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const uniqueValidator = require("mongoose-unique-validator");
 const crypto = require("crypto");
 
-const { secret } = require("../configs/secret.json");
+const { secret } = require("../configs");
 
 const validEmailRegex = /\S+@\S+\.\S+/;
 const validUsernameRegex = /^[a-zA-Z0-9]+$/;
