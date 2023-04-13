@@ -9,7 +9,7 @@ const routes = require("./src/routes");
 const { connectToMongodb } = require("./src/configs/database");
 
 const app = express();
-const PORT = process.env.PORT || 3334;
+const PORT = process.env.PORT || 3333;
 
 require("./src/configs/passport");
 
