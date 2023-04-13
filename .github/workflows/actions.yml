@@ -1,19 +1,31 @@
 name: CI/CD flow config
 on: [push]
 jobs:
-  Pipeline-4uth:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.x]
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
+    - name: start app and test
+      run:
+        yarn
+        yarn installl
+        yarn run eslint
+        yarn run start & sleep 5
+        curl http://localhost:3000/api/health-check
 
-      - name: installing node_modules
-        run: npm install
 
-      - name: running eslint
-        run: npm run lint
+  # Pipeline-4uth:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [16.x]
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v3
 
-      - run: echo "This job's status is ${{ job.status }}."
+  #     - name: running eslint
+  #       run: npm run lint
+
+  #     - run: echo "This job's status is ${{ job.status }}."
