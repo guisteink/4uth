@@ -1,16 +1,6 @@
 const passport = require("../configs/passport");
 const User = require("../models/user");
 
-async function userExists(req) {
-  const data = req.body;
-  const findUser = await UserSchema.findOne({
-    "login.username": {
-      $eq: _.get(data, "login.username"),
-    },
-  });
-  return findUser ? 1 : 0;
-}
-
 const signIn = async (req, res, next) => {
   if (!req.body.user.email) {
     return res.status(422).json({ errors: { email: "can't be empty" } });
@@ -46,7 +36,7 @@ const signUp = async (req, res, next) => {
     },
   });
 
-  if(!findUser) {
+  if (!findUser) {
     const user = new User();
 
     user.username = username;
@@ -60,7 +50,7 @@ const signUp = async (req, res, next) => {
       .catch(next);
   }
 
-  return res.status(400).json({error: "User already exists"});
+  return res.status(400).json({ error: "User already exists" });
 };
 
 module.exports = { signIn, signUp };
