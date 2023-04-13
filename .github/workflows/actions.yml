@@ -9,11 +9,10 @@ jobs:
     steps:
     - name: start app and test
       run:
-        yarn
         yarn install
         yarn run eslint
         yarn run start & sleep 5
-        curl http://localhost:3000/api/health-check
+        curl http://localhost:4040/api/health-check
 
 
   # Pipeline-4uth:
