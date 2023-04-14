@@ -1,5 +1,9 @@
 name: user-management
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
 
@@ -26,3 +30,14 @@ jobs:
 
     - name: Test health-check endpoint
       run: curl http://localhost:3333/api/health-check
+
+    - name: Check for errors
+      if: ${{ job.status != 'success' }}
+      run: exit 1
+
+    - name: Merge to main
+      if: ${{ job.status == 'success' }}
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        branch: main
+        github_token: ${{ secrets.GITHUB_TOKEN }}
