@@ -38,9 +38,6 @@ jobs:
       if: ${{ job.status != 'success' }}
       run: exit 1
 
-    - name: Checking secret
-      run: echo ${{ secrets.ACCESS_TOKEN }}
-
     - name: Merge to main
       if: ${{ job.status == 'success' }}
       uses: ad-m/github-push-action@v0.6.0
