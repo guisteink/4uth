@@ -10,6 +10,19 @@ const { secret } = require("../configs");
 const validEmailRegex = /\S+@\S+\.\S+/;
 const validUsernameRegex = /^[a-zA-Z0-9]+$/;
 
+function getTokenFromHeader(req) {
+  if (
+    (req.headers.authorization &&
+      req.headers.authorization.split(" ")[0] === "Token") ||
+    (req.headers.authorization &&
+      req.headers.authorization.split(" ")[0] === "Bearer")
+  ) {
+    return req.headers.authorization.split(" ")[1];
+  }
+
+  return null;
+}
+
 const UserSchema = new Schema(
   {
     username: {
@@ -83,6 +96,11 @@ UserSchema.methods.generateJWT = function () {
     {
       id: this._id,
       username: this.username,
+      [this.role === "admin"
+        ? "isAdmin"
+        : this.role === "manager"
+          ? "isManager"
+          : "isUser"]: true, // prettier-ignore
       exp: parseInt(exp.getTime() / 1000, 10),
     },
     secret
@@ -104,6 +122,17 @@ UserSchema.methods.toAuthJSON = function () {
     bio: this.bio,
     image: this.image,
   };
+};
+
+/** Decodes a JWT token by extracting it from the authorization
+ * header of a request and using a secret key. The decoded token
+ * contains user information that can be used to check if the user
+ * is authorized to perform certain actions in the application. */
+UserSchema.statics.getJwtContent = function (request) {
+  const token = getTokenFromHeader(request);
+
+  const decoded = jwt.verify(token, secret);
+  return decoded;
 };
 
 const User = mongoose.model("User", UserSchema);

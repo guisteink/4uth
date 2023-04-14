@@ -9,6 +9,19 @@
   "singleAttributePerLine": true,
   "singleQuote": true,
   "tabWidth": 2,
+  "printWidth": 80,
   "trailingComma": "es5",
-  "useTabs": false
+  "useTabs": false,
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "tabWidth": 2,
+        "printWidth": 80,
+        "useTabs": false,
+        "indent": 2,
+        "ignorePath": ".prettierignore"
+      }
+    }
+  ]
 }

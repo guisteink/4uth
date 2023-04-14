@@ -23,6 +23,7 @@
   "semi": ["error", "always"],
   "no-console": "off",
   "no-unused-vars": "warn",
+  "no-nested-ternary": "off",
   "react/jsx-uses-react": "warn",
   "react/jsx-uses-vars": "warn",
   "prettier/prettier": "error",

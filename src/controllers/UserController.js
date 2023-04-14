@@ -46,6 +46,8 @@ const createUser = async (req, res, next) => {
 
   const findUser = await User.findOne({ username });
 
+  const permissions = User.getJwtContent(req);
+
   if (findUser) {
     return res.status(400).json({ error: "User already exists" });
   }
