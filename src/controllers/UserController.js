@@ -42,11 +42,16 @@ const updateUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
+  const permissions = User.getJwtContent(req) ?? {};
+  const { isAdmin, isManager } = permissions ?? {};
+
+  if (!isAdmin && !isManager) {
+    return res.status(400).json({ error: "Unauthorized operation" });
+  }
+
   const { username, email, avatar, role, password } = req.body ?? {};
 
   const findUser = await User.findOne({ username });
-
-  const permissions = User.getJwtContent(req);
 
   if (findUser) {
     return res.status(400).json({ error: "User already exists" });
