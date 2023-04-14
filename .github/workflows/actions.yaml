@@ -1,4 +1,4 @@
-name: CI/CD flow config
+name: Pipeline-4uth
 on: [push]
 
 jobs:
@@ -24,33 +24,6 @@ jobs:
       run: sleep 10s
 
     - name: Test health-check endpoint
-      run: curl http://localhost:3333/health-check
+      run: curl http://localhost:3333/api/health-check
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [16.x]
-  #   steps:
-  #   - name: start app and test
-  #     run:
-  #       bash -c "npm && npm install
-  #       && npm run eslint
-  #       && npm run start & sleep 15
-  #       && curl http://localhost:4040/api/health-check"
-
-
-
-  # Pipeline-4uth:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [16.x]
-  #   steps:
-  #     - name: Check out repository code
-  #       uses: actions/checkout@v3
-
-  #     - name: running eslint
-  #       run: npm run lint
-
-  #     - run: echo "This job's status is ${{ job.status }}."
+    - run: echo "This job's status is ${{ job.status }}."
