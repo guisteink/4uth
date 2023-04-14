@@ -1,7 +1,8 @@
-name: Pipeline-4uth
+name: user-management
 on: [push]
 
 jobs:
+
   build:
 
     runs-on: ubuntu-latest
@@ -25,5 +26,3 @@ jobs:
 
     - name: Test health-check endpoint
       run: curl http://localhost:3333/api/health-check
-
-    - run: echo "This job's status is ${{ job.status }}."
