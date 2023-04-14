@@ -9,7 +9,6 @@ const {
 } = require("../../controllers/UserController");
 
 // todo: implement delete method
-
 router.get("/user", auth.required, (req, res, next) => getUser(req, res, next));
 router.put("/user", auth.required, (req, res, next) =>
   updateUser(req, res, next)

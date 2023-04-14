@@ -42,7 +42,7 @@ const updateUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-  const { username, email, avatar, role, password } = req.body;
+  const { username, email, avatar, role, password } = req.body ?? {};
 
   const findUser = await User.findOne({ username });
 

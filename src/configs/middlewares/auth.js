@@ -1,4 +1,5 @@
-const { expressjwt: jwt } = require("express-jwt");
+const jwt = require("express-jwt");
+
 const { secret } = require("..");
 
 function getTokenFromHeader(req) {
@@ -14,18 +15,15 @@ function getTokenFromHeader(req) {
   return null;
 }
 
-// todo: analyze
 const auth = {
   required: jwt({
     secret,
     userProperty: "payload",
-    algorithms: ["sha512"],
     getToken: getTokenFromHeader,
   }),
   optional: jwt({
     secret,
     userProperty: "payload",
-    algorithms: ["sha512"],
     credentialsRequired: false,
     getToken: getTokenFromHeader,
   }),
