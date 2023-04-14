@@ -10,13 +10,15 @@ const { connectToMongodb } = require("./src/configs/database");
 
 const app = express();
 const PORT = process.env.PORT || 3333;
+const isPrd = process.env.NODE_ENV ? true : false;
 
 require("./src/configs/passport");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-connectToMongodb(process.env.MONGODB_URI);
+
+if(isPrd) connectToMongodb(process.env.MONGODB_URI);
 
 app.use("/", routes);
 
