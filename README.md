@@ -10,8 +10,6 @@
 #### Funcionalidades
 - Registro de usuários
 - Autenticação de usuários
-- Atualização de perfil do usuário
-- Recuperação de senha
 
 #### Como Executar o Projeto
 
