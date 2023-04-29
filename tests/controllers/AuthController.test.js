@@ -23,7 +23,6 @@ describe("POST /signin", () => {
       .post("/api/signin")
       .send({ email: "test@example.com", password: "testpassword" })
       .expect(200);
-
     expect(response.body).toHaveProperty("token");
   });
 
