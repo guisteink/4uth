@@ -4,24 +4,29 @@ const mongoose = require("mongoose");
 
 const User = mongoose.model("User");
 
+const findUserByEmail = async (email) => {
+  const user = await User.findOne({ email });
+  return user;
+};
+
 passport.use(
   new LocalStrategy(
     {
       usernameField: "email",
       passwordField: "password",
     },
-    (email, password, done) => {
-      User.findOne({ email })
-        .then((user) => {
-          if (!user || !user.validPassword(password)) {
-            return done(null, false, {
-              errors: { "email or password": "is invalid" },
-            });
-          }
-
-          return done(null, user);
-        })
-        .catch(done);
+    async (email, password, done) => {
+      try {
+        const user = await findUserByEmail(email);
+        if (!user || !user.validPassword(password)) {
+          return done(null, false, {
+            errors: { "email or password": "is invalid" },
+          });
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
     }
   )
 );

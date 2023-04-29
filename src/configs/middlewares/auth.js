@@ -3,16 +3,17 @@ const jwt = require("express-jwt");
 const { secret } = require("..");
 
 function getTokenFromHeader(req) {
+  const authHeader = req?.headers?.authorization ?? {};
+  const tokenPrefixes = ["Token", "Bearer"];
+
   if (
-    (req.headers.authorization &&
-      req.headers.authorization.split(" ")[0] === "Token") ||
-    (req.headers.authorization &&
-      req.headers.authorization.split(" ")[0] === "Bearer")
+    !authHeader ||
+    !tokenPrefixes.some((prefix) => authHeader.startsWith(prefix))
   ) {
-    return req.headers.authorization.split(" ")[1];
+    return null;
   }
 
-  return null;
+  return authHeader.split(" ")[1];
 }
 
 const auth = {

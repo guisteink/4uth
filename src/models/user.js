@@ -76,6 +76,10 @@ UserSchema.methods.validPassword = function (password) {
  * key (salt) and storing the resulting hash in the database.
  */
 UserSchema.methods.setPassword = function (password) {
+  if (!password) {
+    throw new Error("Password must be provided");
+  }
+
   this.salt = crypto.randomBytes(16).toString("hex");
   this.hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, "sha512")
@@ -90,7 +94,7 @@ UserSchema.methods.setPassword = function (password) {
 UserSchema.methods.generateJWT = function () {
   const today = new Date();
   const exp = new Date(today);
-  exp.setDate(today.getDate() + 2);
+  exp.setDate(today.getDate() + process.env.EXPIRATION_TIME ?? 2);
 
   return jwt.sign(
     {

@@ -3,14 +3,16 @@ const passport = require("passport");
 const User = require("../models/user");
 
 const signIn = async (req, res, next) => {
-  const { email, username, password } = req.body ?? {};
+  const { email, password } = req.body ?? {};
 
-  if (!(email || username)) {
-    return res.status(422).json({ errors: { email: "can't be empty" } });
+  if (!email) {
+    return res.status(422).json({ errors: { email: "email can't be empty" } });
   }
 
   if (!password) {
-    return res.status(422).json({ errors: { password: "can't be empty" } });
+    return res
+      .status(422)
+      .json({ errors: { password: "password can't be empty" } });
   }
 
   passport.authenticate("local", { session: false }, (err, user, info) => {

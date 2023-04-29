@@ -28,3 +28,5 @@ app.use(errorHandler);
 const server = app.listen(PORT, () => {
   console.log(`listening 🔥: ${server.address().port}`);
 });
+
+module.exports = app;

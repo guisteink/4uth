@@ -25,6 +25,9 @@ jobs:
     - name: Checking lint
       run: npm run lint
 
+    - name: Running tests
+      run: npm run tests
+
     - name: Start application
       run: npm start &
 
