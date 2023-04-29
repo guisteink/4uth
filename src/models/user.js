@@ -10,19 +10,6 @@ const { secret } = require("../configs");
 const validEmailRegex = /\S+@\S+\.\S+/;
 const validUsernameRegex = /^[a-zA-Z0-9]+$/;
 
-function getTokenFromHeader(req) {
-  if (
-    (req.headers.authorization &&
-      req.headers.authorization.split(" ")[0] === "Token") ||
-    (req.headers.authorization &&
-      req.headers.authorization.split(" ")[0] === "Bearer")
-  ) {
-    return req.headers.authorization.split(" ")[1];
-  }
-
-  return null;
-}
-
 const UserSchema = new Schema(
   {
     username: {
@@ -54,11 +41,24 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
+function getTokenFromHeader(req) {
+  if (
+    (req.headers.authorization &&
+      req.headers.authorization.split(" ")[0] === "Token") ||
+    (req.headers.authorization &&
+      req.headers.authorization.split(" ")[0] === "Bearer")
+  ) {
+    return req.headers.authorization.split(" ")[1];
+  }
+
+  return null;
+}
+
 /**
  * Adds a plugin that checks if the unique fields of the model
  * are really unique and generates a custom error message if they are not.
  */
-UserSchema.plugin(uniqueValidator, { message: "is already taken." });
+UserSchema.plugin(uniqueValidator, { message: "is already taken" });
 
 /**
  * Verifies if the password provided by the user matches the password
