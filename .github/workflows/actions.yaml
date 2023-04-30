@@ -18,6 +18,8 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 16.x
+        MONGODB_URI: ${{ secrets.MONGODB_URI}}
+        NODE_ENV: ${{ secrets.NODE_ENV }}
 
     - name: Install dependencies
       run: npm install
@@ -34,9 +36,6 @@ jobs:
 
     - name: Running tests
       run: npm run tests
-      with:
-        MONGODB_URI: ${{ secrets.MONGODB_URI}}
-        NODE_ENV: ${{ secrets.NODE_ENV }}
 
     - name: Start application
       run: npm start &
