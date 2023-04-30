@@ -4,6 +4,7 @@ const request = require("supertest");
 const app = require("../../app");
 const User = require("../../src/models/user");
 const { disconnectToMongodb } = require("../../src/configs/database");
+let server;
 
 describe("POST /signin", () => {
   beforeAll(async () => {
