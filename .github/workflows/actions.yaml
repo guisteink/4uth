@@ -18,15 +18,10 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 16.x
+      run: echo ${{env.production}}
 
     - name: Install dependencies
       run: npm install
-
-    - name: Testing .env
-      with:
-        production: ${{env.production}}
-      run:
-        echo "$MONGODB_URI. $NODE_ENV."
 
     - name: Checking lint
       run: npm run lint
