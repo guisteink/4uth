@@ -31,9 +31,9 @@ const signIn = async (req, res, next) => {
 };
 
 const signUp = async (req, res, next) => {
-  const { username, email, avatar, password } = req.body;
+  const { username, email, avatar, password } = req.body ?? {};
 
-  const findUser = await User.findOne({ username });
+  const findUser = await User.findOne({ email });
 
   if (findUser) {
     return res.status(422).json({ error: "User already exists" });

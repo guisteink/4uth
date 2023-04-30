@@ -36,7 +36,7 @@ jobs:
       run: npm run lint
 
     - name: Running tests
-      run: npm run tests
+      run: npm run test
 
     - name: Start application
       run: npm start &
