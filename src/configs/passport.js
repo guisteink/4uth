@@ -20,7 +20,7 @@ passport.use(
         const user = await findUserByEmail(email);
         if (!user || !user.validPassword(password)) {
           return done(null, false, {
-            errors: { "email or password": "is invalid" },
+            errors: { message: "invalid credentials" },
           });
         }
         return done(null, user);

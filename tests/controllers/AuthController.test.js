@@ -26,33 +26,34 @@ describe("POST /signin", () => {
       .post("/api/signin")
       .send({ email: "test@example.com", password: "testpassword" })
       .expect(200);
+
     expect(response.body).toHaveProperty("token");
   });
 
-  // it("retorna um erro 422 se o e-mail ou o nome de usuário estiver vazio", async () => {
-  //   const response = await request(app)
-  //     .post("/signin")
-  //     .send({ password: "testpassword" })
-  //     .expect(422);
+  it("retorna um erro 422 se o e-mail ou o nome de usuário estiver vazio", async () => {
+    const response = await request(server)
+      .post("/api/signin")
+      .send({ password: "testpassword" })
+      .expect(422);
 
-  //   expect(response.body.errors).toHaveProperty("email", "can't be empty");
-  // });
+    expect(response.body.errors).toHaveProperty("email", "can't be empty");
+  });
 
-  // it("retorna um erro 422 se a senha estiver vazia", async () => {
-  //   const response = await request(app)
-  //     .post("/signin")
-  //     .send({ email: "test@example.com" })
-  //     .expect(422);
+  it("retorna um erro 422 se a senha estiver vazia", async () => {
+    const response = await request(server)
+      .post("/api/signin")
+      .send({ email: "test@example.com" })
+      .expect(422);
 
-  //   expect(response.body.errors).toHaveProperty("password", "can't be empty");
-  // });
+    expect(response.body.errors).toHaveProperty("password", "can't be empty");
+  });
 
-  // it("retorna um erro 422 se as credenciais estiverem incorretas", async () => {
-  //   const response = await request(app)
-  //     .post("/signin")
-  //     .send({ email: "test@example.com", password: "wrongpassword" })
-  //     .expect(422);
+  it("retorna um erro 422 se as credenciais estiverem incorretas", async () => {
+    const response = await request(server)
+      .post("/api/signin")
+      .send({ email: "test@example.com", password: "wrongpassword" })
+      .expect(422);
 
-  //   expect(response.body).toEqual({ errors: { message: "Invalid credentials" } });
-  // });
+    expect(response.body).toEqual({ errors: { message: "invalid credentials" } });
+  });
 });

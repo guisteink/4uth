@@ -6,13 +6,13 @@ const signIn = async (req, res, next) => {
   const { email, password } = req.body ?? {};
 
   if (!email) {
-    return res.status(422).json({ errors: { email: "email can't be empty" } });
+    return res.status(422).json({ errors: { email: "can't be empty" } });
   }
 
   if (!password) {
     return res
       .status(422)
-      .json({ errors: { password: "password can't be empty" } });
+      .json({ errors: { password: "can't be empty" } });
   }
 
   passport.authenticate("local", { session: false }, (err, user, info) => {
