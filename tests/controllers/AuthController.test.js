@@ -16,6 +16,7 @@ describe("POST /signin", () => {
 
   afterAll(async () => {
     await User.deleteOne({ email: "test@example.com" });
+    app.close();
   });
 
   it("retorna um token de autenticação válido para um usuário existente", async () => {

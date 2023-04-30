@@ -7,7 +7,7 @@ const connectToMongodb = (url) => {
       { useUnifiedTopology: true },
       { useNewUrlParser: true }
     );
-    console.log("Connected to MongoDB");
+    console.log(`Connected to MongoDB\nurl: ${url}`);
   } catch (error) {
     console.error("Error connecting to mongodb: ", error);
   }
