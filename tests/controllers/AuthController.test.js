@@ -54,6 +54,8 @@ describe("POST /signin", () => {
       .send({ email: "test@example.com", password: "wrongpassword" })
       .expect(422);
 
-    expect(response.body).toEqual({ errors: { message: "invalid credentials" } });
+    expect(response.body).toEqual({
+      errors: { message: "invalid credentials" },
+    });
   });
 });

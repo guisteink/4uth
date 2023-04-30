@@ -10,9 +10,7 @@ const signIn = async (req, res, next) => {
   }
 
   if (!password) {
-    return res
-      .status(422)
-      .json({ errors: { password: "can't be empty" } });
+    return res.status(422).json({ errors: { password: "can't be empty" } });
   }
 
   passport.authenticate("local", { session: false }, (err, user, info) => {
