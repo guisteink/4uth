@@ -17,7 +17,6 @@ describe("POST /signin", () => {
 
   afterAll(async () => {
     await User.deleteOne({ email: "test@example.com" });
-    app.close();
     disconnectToMongodb();
   });
 
