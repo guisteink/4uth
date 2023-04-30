@@ -5,8 +5,6 @@ const server = require("../../app");
 const User = require("../../src/models/user");
 const { disconnectToMongodb } = require("../../src/configs/database");
 
-const PORT = process.env.PORT || 3333;
-
 describe("POST /signin", () => {
   beforeAll(async () => {
     const newUserTest = await new User({
@@ -17,14 +15,14 @@ describe("POST /signin", () => {
     await newUserTest.save();
   });
 
-  afterAll(async (done) => {
+  afterAll(async () => {
     await User.deleteOne({ email: "test@example.com" });
     await disconnectToMongodb();
-    server.close(done);
+    server.close();
   });
 
   it("retorna um token de autenticação válido para um usuário existente", async () => {
-    const response = await request(app)
+    const response = await request(server)
       .post("/api/signin")
       .send({ email: "test@example.com", password: "testpassword" })
       .expect(200);
