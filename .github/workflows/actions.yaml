@@ -22,8 +22,12 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Checking var environment
-      run: echo ${{env.production}}
+    - name: Creating env file
+      run: |
+        touch .env
+          echo MONGODB_URI=${{ secrets.MONGODB_URI}} >> .env
+          echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
+          cat .env
 
     - name: Checking lint
       run: npm run lint
