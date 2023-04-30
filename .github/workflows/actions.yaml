@@ -24,8 +24,6 @@ jobs:
 
     - name: Checking var environment
       run: echo ${{env.production}}
-      with:
-        production: ${{env.production}}
 
     - name: Checking lint
       run: npm run lint
