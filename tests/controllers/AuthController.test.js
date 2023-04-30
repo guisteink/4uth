@@ -1,16 +1,14 @@
 /* global it describe beforeAll afterAll expect */
 const request = require("supertest");
 
-const app = require("../../app");
+const server = require("../../app");
 const User = require("../../src/models/user");
 const { disconnectToMongodb } = require("../../src/configs/database");
 
-let server;
 const PORT = process.env.PORT || 3333;
 
 describe("POST /signin", () => {
   beforeAll(async () => {
-    server = app.listen(PORT);
     const newUserTest = await new User({
       email: "test@example.com",
       username: "testuser",
