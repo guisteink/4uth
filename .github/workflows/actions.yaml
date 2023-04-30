@@ -18,10 +18,14 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 16.x
-      run: echo ${{env.production}}
 
     - name: Install dependencies
       run: npm install
+
+    - name: Checking var environment
+      run: echo ${{env.production}}
+      with:
+        production: ${{env.production}}
 
     - name: Checking lint
       run: npm run lint
