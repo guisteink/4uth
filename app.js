@@ -18,6 +18,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 if (isPrd) connectToMongodb(process.env.MONGODB_URI);
 
 app.use("/", routes);

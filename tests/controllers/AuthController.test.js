@@ -3,6 +3,7 @@ const request = require("supertest");
 
 const app = require("../../app");
 const User = require("../../src/models/user");
+const { disconnectToMongodb } = require("../../src/configs/database");
 
 describe("POST /signin", () => {
   beforeAll(async () => {
@@ -17,6 +18,7 @@ describe("POST /signin", () => {
   afterAll(async () => {
     await User.deleteOne({ email: "test@example.com" });
     app.close();
+    disconnectToMongodb();
   });
 
   it("retorna um token de autenticação válido para um usuário existente", async () => {
