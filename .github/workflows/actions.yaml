@@ -29,6 +29,7 @@ jobs:
         touch .env
           echo MONGODB_URI=${{ secrets.MONGODB_URI}} >> .env
           echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
+          echo SECRET=${{ secrets.SECRET }} >> .env
           cat .env
 
     - name: Checking lint
