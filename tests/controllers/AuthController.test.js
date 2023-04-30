@@ -7,6 +7,7 @@ const { disconnectToMongodb } = require("../../src/configs/database");
 
 describe("POST /signin", () => {
   beforeAll(async () => {
+    server = app.listen(PORT);
     const newUserTest = await new User({
       email: "test@example.com",
       username: "testuser",
@@ -15,9 +16,10 @@ describe("POST /signin", () => {
     await newUserTest.save();
   });
 
-  afterAll(async () => {
+  afterAll(async (done) => {
     await User.deleteOne({ email: "test@example.com" });
     await disconnectToMongodb();
+    server.close(done);
   });
 
   it("retorna um token de autenticação válido para um usuário existente", async () => {
