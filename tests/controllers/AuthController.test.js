@@ -72,7 +72,7 @@ describe("POST /signup", () => {
     await User.deleteMany({
       email: { $in: ["test@example.com", "john@example.com"] },
     });
-    server.close();
+    await server.close();
   });
 
   it("retorna um token de autenticação válido e cria um usuário", async () => {

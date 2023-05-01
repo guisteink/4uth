@@ -36,7 +36,10 @@ jobs:
       run: npm run lint
 
     - name: Running tests
-      run: npm run test
+      timeout-minutes: 5  # Definindo um limite de tempo de 5 minutos
+      run: |
+        npm run test
+        echo "Testes finalizados em $(date)"
 
     - name: Start application
       run: npm start &
