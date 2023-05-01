@@ -17,7 +17,8 @@ describe("POST /signin", () => {
 
   afterAll(async () => {
     await User.deleteOne({ email: "test@example.com" });
-    server.close();
+    await server.close();
+    await disconnectToMongodb();
   });
 
   it("retorna um token de autenticação válido para um usuário existente", async () => {
@@ -74,6 +75,7 @@ describe("POST /signup", () => {
       email: { $in: ["test@example.com", "john@example.com"] },
     });
     await server.close();
+    await disconnectToMongodb();
   });
 
   it("retorna um token de autenticação válido e cria um usuário", async () => {
