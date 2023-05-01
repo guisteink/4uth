@@ -5,6 +5,7 @@ const server = require("../../app");
 const User = require("../../src/models/user");
 
 describe("POST /signin", () => {
+  jest.setTimeout(5000);
   beforeAll(async () => {
     const newUserTest = await new User({
       email: "test@example.com",
@@ -59,6 +60,7 @@ describe("POST /signin", () => {
 });
 
 describe("POST /signup", () => {
+  jest.setTimeout(5000);
   beforeAll(async () => {
     const newUserTest = await new User({
       email: "john@example.com",
