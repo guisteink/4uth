@@ -1,4 +1,4 @@
-/* global it describe beforeAll afterAll expect */
+/* global it describe beforeAll afterAll jest expect */
 const request = require("supertest");
 
 const server = require("../../app");
