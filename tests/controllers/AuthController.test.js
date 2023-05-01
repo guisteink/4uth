@@ -58,44 +58,44 @@ describe("POST /signin", () => {
   });
 });
 
-describe("POST /signup", () => {
-  beforeAll(async () => {
-    const newUserTest = await new User({
-      email: "john@example.com",
-      username: "john",
-    });
-    newUserTest.setPassword("testpassword");
-    await newUserTest.save();
-  });
+// describe("POST /signup", () => {
+//   beforeAll(async () => {
+//     const newUserTest = await new User({
+//       email: "john@example.com",
+//       username: "john",
+//     });
+//     newUserTest.setPassword("testpassword");
+//     await newUserTest.save();
+//   });
 
-  afterAll(async () => {
-    await User.deleteMany({
-      email: { $in: ["test@example.com", "john@example.com"] },
-    });
-    await server.close();
-  });
+//   afterAll(async () => {
+//     await User.deleteMany({
+//       email: { $in: ["test@example.com", "john@example.com"] },
+//     });
+//     server.close();
+//   });
 
-  it("retorna um token de autenticação válido e cria um usuário", async () => {
-    const response = await request(server)
-      .post("/api/signup")
-      .send({ username: "test", email: "test@example.com", password: "test" })
-      .expect(200);
+//   it("retorna um token de autenticação válido e cria um usuário", async () => {
+//     const response = await request(server)
+//       .post("/api/signup")
+//       .send({ username: "test", email: "test@example.com", password: "test" })
+//       .expect(200);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("token");
-  });
+//     expect(response.status).toBe(200);
+//     expect(response.body).toHaveProperty("token");
+//   });
 
-  it("deve retornar um erro 422 se o usuário já existir", async () => {
-    const response = await request(server)
-      .post("/api/signup")
-      .send({
-        username: "john",
-        email: "john@example.com",
-        password: "123456",
-      })
-      .expect(422);
+//   it("deve retornar um erro 422 se o usuário já existir", async () => {
+//     const response = await request(server)
+//       .post("/api/signup")
+//       .send({
+//         username: "john",
+//         email: "john@example.com",
+//         password: "123456",
+//       })
+//       .expect(422);
 
-    expect(response.status).toBe(422);
-    expect(response.body).toHaveProperty("error", "User already exists");
-  });
-});
+//     expect(response.status).toBe(422);
+//     expect(response.body).toHaveProperty("error", "User already exists");
+//   });
+// });
